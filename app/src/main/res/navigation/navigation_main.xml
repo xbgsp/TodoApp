@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/todoListFragment"
         android:name="com.ubaya.todoapp.view.TodoListFragment"
-        android:label="fragment_todo_list"
-        tools:layout="@layout/fragment_todo_list" >
+        android:label="ToDo List"
+        tools:layout="@layout/fragment_todo_list">
         <action
             android:id="@+id/actionCreateTodo"
             app:destination="@id/createTodoFragment"
@@ -22,13 +22,13 @@
     <fragment
         android:id="@+id/createTodoFragment"
         android:name="com.ubaya.todoapp.view.CreateTodoFragment"
-        android:label="fragment_create_todo"
+        android:label="Create ToDo"
         tools:layout="@layout/fragment_create_todo" />
     <fragment
         android:id="@+id/editTodoFragment"
         android:name="com.ubaya.todoapp.view.EditTodoFragment"
-        android:label="fragment_edit_todo"
-        tools:layout="@layout/fragment_edit_todo" >
+        android:label="Edit ToDo"
+        tools:layout="@layout/fragment_edit_todo">
         <argument
             android:name="uuid"
             app:argType="integer" />

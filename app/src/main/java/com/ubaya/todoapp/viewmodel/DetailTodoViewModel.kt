@@ -17,6 +17,9 @@ class DetailTodoViewModel(application: Application) : AndroidViewModel(applicati
     private val job = Job()
     val todoLD = MutableLiveData<Todo>()
 
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Main
+
     fun addTodo(list: List<Todo>) {
         launch {
             val db = buildDb(getApplication())
@@ -30,9 +33,6 @@ class DetailTodoViewModel(application: Application) : AndroidViewModel(applicati
             db.todoDao().update(title, notes, priority, uuid)
         }
     }
-
-    override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.Main
 
     fun fetch(uuid:Int) {
         launch {

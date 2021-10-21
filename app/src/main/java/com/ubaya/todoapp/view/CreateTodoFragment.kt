@@ -27,18 +27,16 @@ class CreateTodoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel =
-            ViewModelProvider(this).get(DetailTodoViewModel::class.java)
+
+        viewModel = ViewModelProvider(this).get(DetailTodoViewModel::class.java)
 
         btnAdd.setOnClickListener {
-            var radio =
-                view.findViewById<RadioButton>(radioGroupPriority.checkedRadioButtonId)
-
-            var todo = Todo(txtTitle.text.toString(),
-                txtNotes.text.toString(), radio.tag.toString().toInt())
+            var radio = view.findViewById<RadioButton>(radioGroupPriority.checkedRadioButtonId)
+            var todo = Todo(txtTitle.text.toString(),txtNotes.text.toString(),radio.tag.toString().toInt(),0)
 
             val list = listOf(todo)
             viewModel.addTodo(list)
+
             Toast.makeText(view.context, "Data added", Toast.LENGTH_LONG).show()
             Navigation.findNavController(it).popBackStack()
         }

@@ -9,8 +9,7 @@ import com.ubaya.todoapp.R
 import com.ubaya.todoapp.model.Todo
 import kotlinx.android.synthetic.main.todo_item_layout.view.*
 
-class TodoListAdapter(val todoList:ArrayList<Todo>, val adapterOnClick : (Any) -> Unit)
-    : RecyclerView.Adapter<TodoListAdapter.TodoViewHolder>() {
+class TodoListAdapter(val todoList:ArrayList<Todo>, val adapterOnClick : (Int) -> Unit) : RecyclerView.Adapter<TodoListAdapter.TodoViewHolder>() {
     class TodoViewHolder(var view: View): RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
@@ -21,23 +20,16 @@ class TodoListAdapter(val todoList:ArrayList<Todo>, val adapterOnClick : (Any) -
     }
 
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
-        holder.view.imgEdit.setOnClickListener {
-            val action =
-                TodoListFragmentDirections.actionEditTodoFragment(todoList[position].uuid)
+        holder.view.checkTask.text = todoList[position].title + " " +todoList[position].is_done
 
+        holder.view.imgEdit.setOnClickListener {
+            val action = TodoListFragmentDirections.actionEditTodoFragment(todoList[position].uuid)
             Navigation.findNavController(it).navigate(action)
         }
 
-        holder.view.checkTask.setText(todoList[position].title.toString())
-
-        holder.view.checkTask.setOnCheckedChangeListener { compoundButton, b ->
-            compoundButton.isChecked = false
-            adapterOnClick(todoList[position])
-        }
-
         holder.view.checkTask.setOnCheckedChangeListener { compoundButton, isChecked ->
-            if(isChecked == true) {
-                adapterOnClick(todoList[position])
+            if(isChecked){
+                adapterOnClick(todoList[position].uuid)
             }
         }
     }

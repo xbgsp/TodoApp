@@ -30,18 +30,17 @@ class EditTodoFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(DetailTodoViewModel::class.java)
         val uuid = EditTodoFragmentArgs.fromBundle(requireArguments()).uuid
         viewModel.fetch(uuid)
-        observeViewModel()
 
         txtJudulTodo.text = "Edit Todo"
         btnAdd.text = "Save Changes"
 
         btnAdd.setOnClickListener {
-            val radio =
-                view.findViewById<RadioButton>(radioGroupPriority.checkedRadioButtonId)
-            viewModel.update(txtTitle.text.toString(), txtNotes.text.toString(),
-                radio.tag.toString().toInt(), uuid)
+            val radio = view.findViewById<RadioButton>(radioGroupPriority.checkedRadioButtonId)
+            viewModel.update(txtTitle.text.toString(), txtNotes.text.toString(), radio.tag.toString().toInt(), uuid)
             Toast.makeText(view.context, "Todo updated", Toast.LENGTH_SHORT).show()
         }
+
+        observeViewModel()
     }
 
     fun observeViewModel() {
