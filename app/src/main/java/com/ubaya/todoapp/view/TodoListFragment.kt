@@ -15,11 +15,12 @@ import com.ubaya.todoapp.viewmodel.ListTodoViewModel
 import kotlinx.android.synthetic.main.fragment_todo_list.*
 
 class TodoListFragment : Fragment() {
-    private lateinit var viewModel: ListTodoViewModel
-    private val todoListAdapter  = TodoListAdapter(arrayListOf(), { item -> doClick(item) })
+    private lateinit var viewModel:ListTodoViewModel
+    private val todoListAdapter:TodoListAdapter= TodoListAdapter(arrayListOf(),
+        {item -> doClick(item)})
 
-    fun doClick(item:Int) {
-        viewModel.updateTodoDone(item)
+    fun doClick(item: Any){
+        viewModel.updateTodoDone(item as Todo)
     }
 
     override fun onCreateView(
@@ -35,19 +36,19 @@ class TodoListFragment : Fragment() {
 
         viewModel = ViewModelProvider(this).get(ListTodoViewModel::class.java)
         viewModel.refresh()
+
         recViewTodo.layoutManager = LinearLayoutManager(context)
         recViewTodo.adapter = todoListAdapter
 
-        fabAddTodo.setOnClickListener {
+        fabAddTodo.setOnClickListener{
             val action = TodoListFragmentDirections.actionCreateTodo()
             Navigation.findNavController(it).navigate(action)
         }
 
         observeViewModel()
-
     }
 
-    fun observeViewModel() {
+    fun observeViewModel(){
         viewModel.todoLD.observe(viewLifecycleOwner, Observer {
             todoListAdapter.updateTodoList(it)
             if(it.isEmpty()) {
@@ -57,6 +58,4 @@ class TodoListFragment : Fragment() {
             }
         })
     }
-
-
 }
